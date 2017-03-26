@@ -1,0 +1,16 @@
+<div class="card challenge-card selected">
+      <h3><%= challenge.activity.title %></h3>
+      <hr>
+      <p><%= challenge.activity.description %></p>
+      <p><%= challenge.activity.example %></p>
+</div>
+
+<% if challenge.post %>
+  <div class="card">
+    <h2><%= challenge.post.title %></h2>
+    <p><%= challenge.post.content %><p>
+    <%= button_to "Edit Your Post", edit_post_path(challenge.post), method: "get" %>
+  </div>
+<% else %>
+  <%= button_to "Want to Share Your Experience?", new_post_path, method: "get" %>
+<% end %>

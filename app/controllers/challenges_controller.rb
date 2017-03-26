@@ -1,26 +1,12 @@
 class ChallengesController < ApplicationController
-  before_action :set_challenge, only: [:show, :update, :destroy]
+  before_action :set_challenge, only: [:show, :update, :destroy, :build_post]
   before_action :challenge_owner?, only: [:update, :destroy]
   # GET /challenges/1
   def show
   end
 
-  # POST /challenges
-  def create
-    @challenge = Challenge.new(challenge_params)
-
-    respond_to do |format|
-      if @challenge.save
-        format.html { redirect_to @challenge, notice: "You've accepted a challenge! Go get 'em!'" }
-      else
-        format.html { render :new }
-      end
-    end
-  end
-
   # PATCH/PUT /challenges/1
   def update
-    @challenge = Challenge.find(params[:id])
     if @challenge.unchosen?
       @challenge.status = :chosen
       @challenge.save
@@ -34,6 +20,13 @@ class ChallengesController < ApplicationController
         format.html { redirect_to root_path, notice: "Maybe next time!"}
       end
     end
+  end
+
+  def build_post
+    if !@challenge.post
+      @challenge.build_post.save
+    end
+    redirect_to edit_post_path(@challenge.post)
   end
 
   private
