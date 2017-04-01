@@ -120,7 +120,7 @@ font-family: $heading;
   text-decoration: none !important;
 }
 
-.challenge-card.selected {
+.challenge-card.chosen {
   color: white;
   background-color: $challenge-select;
 
@@ -131,7 +131,7 @@ font-family: $heading;
   background-color: $show-card;
 }
 
-.challenge-card.unselected {
+.challenge-card.unchosen {
   color: white;
   background-color: $challenge-unselect;
 }

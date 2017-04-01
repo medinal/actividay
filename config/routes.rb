@@ -6,8 +6,7 @@ Rails.application.routes.draw do
   get "/welcome", to: "splash#index", as: "splash"
 
   #posts routes
-  get "/posts/new", to: "posts#new", as: "new_post"
-  resources :posts, except: [:new]
+  resources :posts
 
   #challenges routes with an extra patch/put for posting.
   resources :challenges, except: [:new, :index, :edit] do
@@ -23,8 +22,7 @@ Rails.application.routes.draw do
   get "/users/:id", to: "users#show", as: "user"
 
   #activites routes
-  get "/activities", to: "activities#index"
-  get "/activities/:id", to: "activities#show", as: "activity_show"
+  resources :activities, only: [:index, :show]
 
   #catch-all
   match "*a", to: 'users#profile', via: :all

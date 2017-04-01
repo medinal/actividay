@@ -27,6 +27,13 @@ class User < ApplicationRecord
     age = d.year - self.born_on.year - (d > today ? 1 : 0)
   end
 
+  def todays_challenges
+    # TODO use a scope: Challenge.today...
+    challenges.where("created_at > ?", 1.day.ago)
+              .where.not(:status => :not_interested)
+              .order(activity_id: :desc)
+  end
+
   private
 
   # source: http://stevenyue.com/blogs/validate-attachment-file-size-and-type-in-rails/

@@ -9,4 +9,18 @@ class Challenge < ApplicationRecord
 
   delegate :title, to: :activity, prefix: true
 
+  NOTICES = {
+    posted: "You can't give up on a challenge you've posted to.",
+    unchosen: "You've accepted a challenge! Go get 'em!",
+    chosen: "Maybe next time!"
+  }
+
+  def self.notice(status)
+    NOTICES[status.to_sym]
+  end
+
+  def next_status
+    @next_status ||= Challenge.statuses.invert[Challenge.statuses[status] + 1]
+  end
+
 end

@@ -3,7 +3,7 @@
     <% slice.each do |activity| %>
     <div class="activity-card-all col-md-4">
       <div class="card">
-        <h3><%= link_to "#{activity.title}", activity_show_path(activity), class: "link" %></h3>
+        <h3><%= link_to "#{activity.title}", activity_path(activity), class: "link" %></h3>
         <p><%= truncate(activity.description, length:140) %></p>
       </div>
       <br>

@@ -8,29 +8,22 @@ class ChallengesController < ApplicationController
 
   # PATCH/PUT, updates a challenge to chosen or unchosen depending on its status.
   def update
-    if @challenge.posted?
-      respond_to do |format|
-        format.html { redirect_to root_path, notice: "You can't give up on a challenge you've posted to."}
-      end
-    elsif @challenge.unchosen?
-      @challenge.status = :chosen
-      @challenge.save
-      respond_to do |format|
-        format.html { redirect_to root_path, notice: "You've accepted a challenge! Go get 'em!"}
-      end
-    elsif @challenge.chosen?
-      @challenge.status= :unchosen
-      @challenge.save
-      respond_to do |format|
-        format.html { redirect_to root_path, notice: "Maybe next time!"}
-      end
+    status = params[:status]
+    @challenge.status = status if status
+    @challenge.save! # TODO: on error
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: Challenge.notice(status)}
     end
+
+    rescue
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "Something went terribly wrong."}
+      end
   end
 
   # PATCH/PUT, updates a challenge to posted if a post has been created for it.
   def not_interested
-    @challenge.status = :not_interested
-    @challenge.save
+    @challenge.not_interested!
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Ok, you won't see it again!!"}
     end
